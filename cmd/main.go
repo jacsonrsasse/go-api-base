@@ -1,7 +1,7 @@
 package main
 
 import (
-	"log"
+	"log/slog"
 	"os"
 
 	"github.com/jacsonrsasse/go-api-base/internal/app"
@@ -17,8 +17,11 @@ func main() {
 		Config: cfg,
 	}
 
+	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
+	slog.SetDefault(logger)
+
 	if err := app.Run(app.Mount()); err != nil {
-		log.Printf("server has failed to start, err %s", err)
+		slog.Error("server has failed to start", "err", err)
 		os.Exit(1)
 	}
 }
