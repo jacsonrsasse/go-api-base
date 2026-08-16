@@ -26,6 +26,8 @@ func (app *Application) Mount() http.Handler {
 		w.Write([]byte("ok"))
 	})
 
+	addRoutes(r)
+
 	return r
 }
 
