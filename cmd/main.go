@@ -33,6 +33,7 @@ func main() {
 
 	app := app.Application{
 		Config: cfg,
+		Db: conn,
 	}
 
 	if err := app.Run(app.Mount()); err != nil {

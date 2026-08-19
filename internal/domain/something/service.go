@@ -1,18 +1,25 @@
 package something
 
-import "context"
+import (
+	"context"
+
+	repository "github.com/jacsonrsasse/go-api-base/internal/adapters/postgresql/sqlc"
+)
 
 type Service interface {
-	ListSomething(ctx context.Context) ([]string, error)
+	ListSomething(ctx context.Context) ([]repository.Something, error)
 }
 
 type svc struct {
+	repo repository.Querier
 }
 
-func NewService() Service {
-	return &svc{}
+func NewService(repo repository.Querier) Service {
+	return &svc{
+		repo,
+	}
 }
 
-func (s *svc) ListSomething(ctx context.Context) ([]string, error) {
-	return []string{"something"}, nil
+func (s *svc) ListSomething(ctx context.Context) ([]repository.Something, error) {
+	return s.repo.ListSomething(ctx)
 }
